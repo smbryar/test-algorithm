@@ -37,9 +37,9 @@ function getTodaysTask(subtasks, today) {
     if (todayTasks.length === 0) {
         startNewTask = subtasks.find(task => !task.started);
         // if there are no practices at all
-        if (!startNewTask) { console.log("Great job, have a day off") }
+        if (!startNewTask) { return "No task" }
         else {
-            startNewTask.nextDate = today;
+            startNewTask.nextDate = tomorrow;
             startNewTask.lastGap0 = 0;
             startNewTask.lastGap1 = 1;
             startNewTask.started = true;
