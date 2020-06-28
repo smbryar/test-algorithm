@@ -51,3 +51,14 @@ xdescribe("getTodaysTask", () => {
         expect(getTodaysTask(subtasks,today)).toEqual("No task");
     });
 });
+
+xdescribe("updateCompletedPractice", () => {
+    test("returns task with lastgaps of 0 and 1", () => {
+        let subtask = { text: "a", nextDate: "2020-06-27", lastGap0: 0, lastGap1: 1, started: true };
+        expect(updateCompletedPractice(subtask)).toEqual({ text: "a", nextDate: "2020-06-28", lastGap0: 1, lastGap1: 1, started: true });
+    });
+    test("returns task correctly when date goes into next month", () => {
+        let subtask = { text: "a", nextDate: "2020-06-27", lastGap0: 3, lastGap1: 5, started: true };
+        expect(updateCompletedPractice(subtask)).toEqual({ text: "a", nextDate: "2020-07-05", lastGap0: 5, lastGap1: 8, started: true });
+    });
+});

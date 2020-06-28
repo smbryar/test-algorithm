@@ -22,11 +22,13 @@ function produceSchedule(today,endDate,subtasks) {
 }
 
 
-function updateCompletedPractice(subtask) {
+function updateCompletedPractice(originalSubtask) {
+    const subtask = Object.assign({},originalSubtask)
     let nextGap = subtask.lastGap0 + subtask.lastGap1;
     subtask.nextDate = moment(subtask.nextDate).add(nextGap, "days").format("YYYY-MM-DD");
     subtask.lastGap0 = subtask.lastGap1;
     subtask.lastGap1 = nextGap;
+    return subtask;
 }
 
 function getTodaysTask(subtasks, today) {
