@@ -41,25 +41,27 @@ describe("getTodaysTask", () => {
             { text: "a", nextDate: null, lastGap0: null, lastGap1: null, started: false },
             { text: "b", nextDate: null, lastGap0: null, lastGap1: null, started: false }
         ];
-        expect(getTodaysTask(subtasks,today)).toEqual({ text: "a", nextDate: "2020-06-28", lastGap0: 0, lastGap1: 1, started: true });
+        expect(getTodaysTask(subtasks,today)).toEqual({ text: "a", nextDate: "2020-06-27", lastGap0: 0, lastGap1: 1, started: true });
     });
-    test("returns \"No task\" if passed only started tasks in the future", () => {
+    test("returns undefined if passed only started tasks in the future", () => {
         let today = "2020-06-27";
         let subtasks = [
             { text: "a", nextDate: "2020-06-30", lastGap0: 0, lastGap1: 1, started: true }
         ];
-        expect(getTodaysTask(subtasks,today)).toEqual("No task");
+        expect(getTodaysTask(subtasks,today)).toEqual(undefined);
     });
 });
 
 describe("updateCompletedPractice", () => {
     test("returns task with lastgaps of 0 and 1", () => {
+        let today = "2020-06-27";
         let subtask = { text: "a", nextDate: "2020-06-27", lastGap0: 0, lastGap1: 1, started: true };
-        expect(updateCompletedPractice(subtask)).toEqual({ text: "a", nextDate: "2020-06-28", lastGap0: 1, lastGap1: 1, started: true });
+        expect(updateCompletedPractice(subtask,today)).toEqual({ text: "a", nextDate: "2020-06-28", lastGap0: 1, lastGap1: 1, started: true });
     });
     test("returns task correctly when date goes into next month", () => {
+        let today = "2020-06-27";
         let subtask = { text: "a", nextDate: "2020-06-27", lastGap0: 3, lastGap1: 5, started: true };
-        expect(updateCompletedPractice(subtask)).toEqual({ text: "a", nextDate: "2020-07-05", lastGap0: 5, lastGap1: 8, started: true });
+        expect(updateCompletedPractice(subtask,today)).toEqual({ text: "a", nextDate: "2020-07-05", lastGap0: 5, lastGap1: 8, started: true });
     });
 });
 
