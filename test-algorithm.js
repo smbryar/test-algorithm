@@ -6,19 +6,21 @@ let subtasks = [
     { text: "c", nextDate: null, lastGap0: null, lastGap1: null, started: false }
 ];
 
-
 let today = "2020-06-27";
 
-const schedule = [];
-
-while (moment(today).isBefore("2020-07-30")) {
-    let taskToDo = getTodaysTask(subtasks, today);
-    schedule.push({ date: today, task: taskToDo.text });
-    console.log({ date: today, task: taskToDo.text })
-    updateCompletedPractice(taskToDo);
-
-    today = moment(today).add(1, "days").format("YYYY-MM-DD");
+function produceSchedule(today,endDate,subtasks) {    
+    const schedule = [];
+    while (moment(today).isBefore(endDate)) {
+        let taskToDo = getTodaysTask(subtasks, today);
+        schedule.push({ date: today, task: taskToDo.text });
+        console.log({ date: today, task: taskToDo.text })
+        updateCompletedPractice(taskToDo);
+    
+        today = moment(today).add(1, "days").format("YYYY-MM-DD");
+    }
+    return schedule;
 }
+
 
 function updateCompletedPractice(subtask) {
     let nextGap = subtask.lastGap0 + subtask.lastGap1;
@@ -54,6 +56,9 @@ function lowestGap(taskArray) {
     }, { lastGap0: Infinity, lastGap1: Infinity });
 }
 
-
-console.log(schedule)
-
+module.exports = {
+    produceSchedule,
+    updateCompletedPractice,
+    getTodaysTask,
+    lowestGap
+  };
