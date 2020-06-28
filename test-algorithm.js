@@ -1,20 +1,14 @@
 const moment = require('moment');
 
-let subtasks = [
-    { text: "a", nextDate: "2020-06-27", lastGap0: 0, lastGap1: 1, started: true },
-    { text: "b", nextDate: null, lastGap0: null, lastGap1: null, started: false },
-    { text: "c", nextDate: null, lastGap0: null, lastGap1: null, started: false }
-];
-
-let today = "2020-06-27";
-
 function produceSchedule(today,endDate,subtasks) {    
     const schedule = [];
     while (moment(today).isBefore(endDate)) {
         let taskToDo = getTodaysTask(subtasks, today);
         schedule.push({ date: today, task: taskToDo.text });
-        console.log({ date: today, task: taskToDo.text })
-        updateCompletedPractice(taskToDo);
+        
+        let updatedSubtask = updateCompletedPractice(taskToDo);
+        let updatedSubtasks = subtasks.filter(task => task.text !== taskToDo.text);
+        subtasks = [...updatedSubtasks,updatedSubtask];
     
         today = moment(today).add(1, "days").format("YYYY-MM-DD");
     }
