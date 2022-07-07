@@ -4,7 +4,7 @@
   "description": "",
   "main": "test-algorithm.js",
   "dependencies": {
-    "moment": "^2.27.0"
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "jest": "^26.1.0"
